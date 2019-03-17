@@ -27,6 +27,9 @@
 			<link rel="stylesheet" href="css/magnific-popup.css">
 			<link rel="stylesheet" href="css/bootstrap.css">
 			<link rel="stylesheet" href="css/main.css">
+
+
+
 		</head>
 		<body>
 
@@ -63,38 +66,63 @@
 							
 						</div>
 						<div class="col-lg-5  col-md-6 header-right">
+
+							<!-- login form -->
+							<div id="login">
+
 							<h4 class="text-white pb-30">Sign In</h4>
-							<form class="form" role="form" autocomplete="off" id="login">
+							<form class="form" role="form" autocomplete="off" method="post" action="controller/brentalLogin.php" onsubmit="return do_login();">
 							   						    
 							    <div class="from-group">
-							    	<!-- <input class="form-control txt-field" type="text" name="name" placeholder="Your name"> -->
-							    	<input class="form-control txt-field" type="email" name="email" placeholder="Email address">
-							    	<input class="form-control txt-field" type="password" name="pwd" placeholder="Password">
+							    	<input class="form-control txt-field" type="email" id="emailLogin" name="email" placeholder="Email address" required>
+							    	<input class="form-control txt-field" type="password" id="pwdLogin" name="pwd" placeholder="Password" required>
 							    </div>
 							    <div class="form-group row">
 							        <div class="col-md-12">
-							            <button type="reset" class="btn btn-default btn-lg btn-block text-center text-uppercase">Sign In</button>
-							            <button type="reset" class="btn btn-default btn-lg btn-block text-center text-uppercase" onclick="signup()">Create an account</button>
+							            <button type="submit" name="login" class="btn btn-default btn-lg btn-block text-center text-uppercase">Sign In</button>
+							            
 							        </div>
 							    </div>
 							</form>
+									<button class="btn btn-default btn-sm btn-block text-center text-uppercase" onclick="signup()">Create an account</button>
 
-							<form class="form" role="form" autocomplete="off" id="signup" style="display: none">
+							</div>
+
+							<!-- End of log in form-->
+
+							<!-- sign up form -->
+
+							<div id="signup" style="display: none">
+
+							<h4 class="text-white pb-30">Sign In</h4>
+							<form class="form" role="form" autocomplete="off"  method="post" action="controller/brentalRegister.php" onsubmit="return do_register();" >
 							   						    
 							    <div class="from-group">
-							    	<input class="form-control txt-field" type="text" name="name" placeholder="First name">
-							    	<input class="form-control txt-field" type="text" name="name" placeholder="Last name">
-							    	<input class="form-control txt-field" type="email" name="email" placeholder="Email address">
-							    	<input class="form-control txt-field" type="password" name="pwd" placeholder="Password">
+							    	<input class="form-control txt-field" type="text" name="fname" id="fname" placeholder="First name" required>
+							    	<input class="form-control txt-field" type="text" name="lname" id="lname" placeholder="Last name" required>
+							    	<div class="form-group">
+							       	<div class="default-select" id="default-select"">
+										<select name="school" id="school">
+											<option value="" disabled selected hidden>Select Your University</option>
+											<option value="ASH">Ashesi University</option>
+										</select>
+									</div>
+							    </div>
+							    	<input class="form-control txt-field" type="email" name="email" id="emailReg" placeholder="Student Email address" required>
+							    	<input class="form-control txt-field" type="password" name="pwd" id="pwdReg" placeholder="Password" required>
 							    </div>
 							    <div class="form-group row">
 							        <div class="col-md-12">
-							            <button type="reset" class="btn btn-default btn-lg btn-block text-center text-uppercase">Sign Up</button>
-							            <button type="reset" class="btn btn-default btn-lg btn-block text-center text-uppercase" onclick="login()">Log In</button>
+							            <button type="submit" name="signup" class="btn btn-default btn-lg btn-block text-center text-uppercase">Sign Up</button>
+							            
 							        </div>
 							    </div>
 							</form>
+								<button class="btn btn-default btn-sm btn-block text-center text-uppercase" onclick="login()">Log In</button>
 
+							</div>
+
+							<!-- end of sign up form -->
 						</div>											
 					</div>
 				</div>
@@ -133,6 +161,84 @@
 
 			</script>	
 
+			<script type="text/javascript">
+
+				function do_login(){
+
+					let email = $("#emailLogin").val() ;
+					let pwd = $("#pwdLogin").val() ;
+
+					if (email!="" && pwd!="") {
+						$.ajax({
+							type: "post",
+							url: "controller/brentalLogin.php",
+							data:{
+								do_login:"do_login",
+								email:email,
+								password:pwd
+							},
+							success: function(response){
+								if (response=="success") {
+									window.location.href="home.html" ;
+								}
+								else{
+									alert("wrong details") ;
+								}
+							}
+						}) ;
+					} else{
+						alert("please fill all details") ;
+					}
+
+					return false ;
+				}
+				
+			</script>
+
+			<script type="text/javascript">
+				
+
+				 function do_register(){
+
+					let email = $("#emailReg").val() ;
+					let pwd = $("#pwdReg").val() ;
+					let fname = $("#fname").val() ;
+					let lname = $("#lname").val() ;
+					let school = $("#school").val() ;
+
+					if (email!="" && pwd!="") {
+						$.ajax({
+							type: "post",
+							url: "controller/brentalRegister.php",
+							data:{
+								do_login:"do_login",
+								email:email,
+								password:pwd,
+								fname:fname,
+								lname:lname,
+								school:school
+							},
+							success: function(response){
+								if (response=="success") {
+									window.location.href="home.html" ;
+								}
+								else{
+									alert("connection error") ;
+								}
+							}
+						}) ;
+					} else{
+						alert("please fill all details") ;
+					}
+
+					return false ;
+				}
+				
+
+			</script>
+
+
+			
 			<script src="js/vendor/jquery-2.2.4.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 			<script src="js/vendor/bootstrap.min.js"></script>			
