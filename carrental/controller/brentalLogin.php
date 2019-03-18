@@ -16,7 +16,7 @@ if (isset($_POST["do_login"])){
     	while($row = $result->fetch_assoc()) {
         	if ($password == $row["password"]) {
         			$_SESSION["ID"] = $row["id"] ;
-        			echo ["success";
+        			echo "success";
         	}
         	else{
         			echo "fail" ;
